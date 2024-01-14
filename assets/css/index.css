@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    -webkit-user-drag: none; /* Safari */
+    -khtml-user-drag: none; /* Konqueror */
+    -moz-user-drag: none; /* Firefox */
+    -o-user-drag: none; /* Opera */
+    user-drag: none;
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror */
+    -moz-user-select: none; /* Firefox */
+    -o-user-select: none; /* Opera */
+    user-select: none;
+}
+  
+/* 创建自定义滚动条 */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 8px;
+    background-color: transparent;
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    border-radius: 30px;
+    background: rgba(128, 128, 128, 0.2);
+}
+
+/* 鼠标悬停时的滑块样式 */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(128, 128, 128, 0.3);
+}
+
+.arco-pagination-item-active, .arco-pagination-item-active:hover {
+    background-color: rgba(192, 72, 81, 0.15) !important;
+    color: #c04851 !important;
+}
+
+.arco-comment-author {
+    font-size: 18px !important;
+    font-weight: bold;
+}
+
+.arco-modal-footer > button {
+    background-color: #c04851 !important;
+}
+
+.arco-input-wrapper:focus-within {
+    border-color: #c04851 !important;
+}
+
+.arco-btn-primary:hover {
+    opacity: 0.95;
+    background-color: #c04851 !important;
+    box-shadow:  1px 1px 2px #cccccc,
+             -1px -1px 2px #ffffff;
+}
+
+.arco-btn-secondary:hover {
+    opacity: 0.95;
+    background-color: #f8f4ed !important;
+    box-shadow:  1px 1px 2px #e4dfd7,
+                -1px -1px 2px #dad4cb;
+}
+
+.arco-comment-content {
+    height: 9.5vh;
+}
+
+.arco-select-view-single:focus-within {
+    border: #c04851 solid 1px !important;
+}
+
+.arco-menu-light .arco-menu-item.arco-menu-selected {
+    color: #c04851 !important;
+}
+
+.arco-typography code {
+    border: 0 !important;
+    margin: 0 !important;
+}

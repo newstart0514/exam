@@ -1,0 +1,92 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            Int            @id @default(autoincrement())
+  name          String
+  // 班级
+  from          String
+  studentId     String
+  email         String
+  phone         String
+  password      String?
+  // 是否为考试官
+  isInterviewer Boolean?       @default(false)
+  // 是否为管理员
+  isAdmin       Boolean?       @default(false)
+  answers       Answer[]
+  testPaper     CompleteLink[]
+}
+
+model TestPaper {
+  id        Int            @id @default(autoincrement())
+  paperCode String
+  paperName String
+  startTime String
+  endTime   String
+  desc      String         @db.Text
+  questions Link[]
+  userPaper CompleteLink[]
+  createAt  DateTime
+}
+
+model Question {
+  id          Int          @id @default(autoincrement())
+  qaTitle     String       @db.Text
+  qaContent   String?      @db.Text
+  qaDesc      String?      @db.Text
+  qaType      String
+  score       Int
+  testPaper   Link[]
+  answers     Answer[]
+  exam_answer ExamAnswer[]
+}
+
+model ExamAnswer {
+  id       Int      @id @default(autoincrement())
+  answer   String   @db.Text
+  question Question @relation(fields: [qaId], references: [id])
+  qaId     Int
+  createAt DateTime
+}
+
+model Answer {
+  id       Int      @id @default(autoincrement())
+  answer   String   @db.Text
+  // boolean 表示客观正确,字符串表示通过数/总数
+  result   String
+  question Question @relation(fields: [qaId], references: [id])
+  qaId     Int
+  answerer User     @relation(fields: [userId], references: [id])
+  userId   Int
+  createAt DateTime
+}
+
+model Link {
+  testPaper   TestPaper @relation(fields: [testPaperId], references: [id])
+  testPaperId Int
+  question    Question  @relation(fields: [questionId], references: [id])
+  questionId  Int
+
+  @@id([testPaperId, questionId])
+}
+
+model CompleteLink {
+  testPaper   TestPaper @relation(fields: [testPaperId], references: [id])
+  testPaperId Int
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+
+  @@id([testPaperId, userId])
+}
+
+model AdminOption {
+  id   Int    @id @default(autoincrement())
+  name String @db.Text
+}
