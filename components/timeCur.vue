@@ -1,5 +1,5 @@
 <template>
-  <span style="font-size: 32px; font-family: 'jinghong';">
+  <span style="font-size: 32px; font-family: &quot;jinghong&quot;">
     {{ formatTime(currentTime) }}
   </span>
 </template>
@@ -12,24 +12,21 @@ function getCurrent() {
   return new Date();
 }
 function formatTime(time: Date) {
-  let formatted = time.toLocaleString('default', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'  
-  })
-  return formatted
+  let formatted = time.toLocaleString("default", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+  return formatted;
 }
 onMounted(() => {
   timer = setInterval(() => {
-    currentTime.value = getCurrent()
-  }, 1000)
-})
+    currentTime.value = getCurrent();
+  }, 1000);
+});
 onUnmounted(() => {
-  clearInterval(timer)
-})
+  clearInterval(timer);
+});
 </script>
 
-<style>
-
-</style>
-
+<style></style>

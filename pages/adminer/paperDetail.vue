@@ -1,13 +1,12 @@
 <template>
-  <div style="margin: 1rem 2rem;">
-    <a-card
-      class="card"
-      :bordered="false"
-    >
+  <div style="margin: 1rem 2rem">
+    <a-card class="card" :bordered="false">
       <template #title>
         <!-- 标题 -->
-        <span style="font-weight: 600;">试卷详情</span>
-        <span class="ml" style="font-size: small;margin-right: 0.2rem;">分数：<a-tag color="gold">{{ userInfo.score }}</a-tag></span>
+        <span style="font-weight: 600">试卷详情</span>
+        <span class="ml" style="font-size: small; margin-right: 0.2rem"
+          >分数：<a-tag color="gold">{{ userInfo.score }}</a-tag></span
+        >
         <a-dropdown trigger="hover">
           <a-button type="text" status="warning">
             <template #icon>
@@ -16,13 +15,28 @@
             考生信息
           </a-button>
           <template #content>
-            <div class="pr pl pt pb" style="background-color: transparent;">
-              <img src="/xueshihat.png" class="userCardImg"/>
-              <div style="margin-bottom: 0.2rem;"><span style="font-weight: 600;">姓名:&nbsp;&nbsp;</span>{{ userInfo.name }}</div>
-              <div style="margin-bottom: 0.2rem;"><span style="font-weight: 600;">班级:&nbsp;&nbsp;</span>{{ userInfo.from }}</div>
-              <div style="margin-bottom: 0.2rem;"><span style="font-weight: 600;">学号:&nbsp;&nbsp;</span>{{ userInfo.studentId }}</div>
-              <div style="margin-bottom: 0.2rem;"><span style="font-weight: 600;">电话:&nbsp;&nbsp;</span>{{ userInfo.phone }}</div>
-              <div style="margin-bottom: 0.2rem;"><span style="font-weight: 600;">邮箱:&nbsp;&nbsp;</span>{{ userInfo.email }}</div>
+            <div class="pr pl pt pb" style="background-color: transparent">
+              <img src="/xueshihat.png" class="userCardImg" />
+              <div style="margin-bottom: 0.2rem">
+                <span style="font-weight: 600">姓名:&nbsp;&nbsp;</span
+                >{{ userInfo.name }}
+              </div>
+              <div style="margin-bottom: 0.2rem">
+                <span style="font-weight: 600">班级:&nbsp;&nbsp;</span
+                >{{ userInfo.from }}
+              </div>
+              <div style="margin-bottom: 0.2rem">
+                <span style="font-weight: 600">学号:&nbsp;&nbsp;</span
+                >{{ userInfo.studentId }}
+              </div>
+              <div style="margin-bottom: 0.2rem">
+                <span style="font-weight: 600">电话:&nbsp;&nbsp;</span
+                >{{ userInfo.phone }}
+              </div>
+              <div style="margin-bottom: 0.2rem">
+                <span style="font-weight: 600">邮箱:&nbsp;&nbsp;</span
+                >{{ userInfo.email }}
+              </div>
             </div>
           </template>
         </a-dropdown>
@@ -50,7 +64,7 @@
             <template #content>
               <a-doption>
                 <template #icon>
-                  <icon-close style="color: red"/>
+                  <icon-close style="color: red" />
                 </template>
                 <template #default>
                   <span style="color: red">不通过</span>
@@ -58,7 +72,7 @@
               </a-doption>
               <a-doption>
                 <template #icon>
-                  <icon-check style="color: green"/>
+                  <icon-check style="color: green" />
                 </template>
                 <template #default>
                   <span style="color: green">通过</span>
@@ -68,7 +82,11 @@
           </a-dropdown>
         </div>
       </template>
-      <edit-viewer :content="content" v-if="content" style="height: calc(100vh - 102px - 4rem);overflow: auto;"></edit-viewer>
+      <edit-viewer
+        :content="content"
+        v-if="content"
+        style="height: calc(100vh - 102px - 4rem); overflow: auto"
+      ></edit-viewer>
     </a-card>
   </div>
 </template>
@@ -76,45 +94,46 @@
 <script lang="ts" setup>
 // 定义页面布局
 definePageMeta({
-  layout: 'admin',
-  middleware: ['auth']
-})
-const route = useRoute()
-const router = useRouter()
-const query = route.query
-const content = ref('')
+  layout: "admin",
+  middleware: ["auth"],
+});
+const route = useRoute();
+const router = useRouter();
+const query = route.query;
+const content = ref("");
 const userInfo = ref({
-  name: '无信息',
-  from: '无信息',
-  studentId: '无信息',
-  email: '无信息',
-  phone: '无信息',
-  score: '无信息'
-})
+  name: "无信息",
+  from: "无信息",
+  studentId: "无信息",
+  email: "无信息",
+  phone: "无信息",
+  score: "无信息",
+});
 
 const getPaper = async () => {
   const postData = {
     userId: parseInt(query.uid as string),
-    examId: parseInt(query.eid as string)
+    examId: parseInt(query.eid as string),
+  };
+  const { ok, data, user } = await httpPost("/api/adminer/exam", postData);
+  if (ok) {
+    content.value = data;
+    userInfo.value = user;
   }
-  const {ok, data, user} = await httpPost('/api/adminer/exam', postData)
-  if(ok) {
-    content.value = data
-    userInfo.value = user
-  }
-}
+};
 
 onMounted(() => {
-    getPaper()
-})
+  getPaper();
+});
 </script>
 
 <style scoped>
 .card {
-    border-radius: 8px;
-    background: #ffffff;
-    box-shadow:  6px 6px 12px #cccccc,
-                -6px -6px 12px #ffffff;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow:
+    6px 6px 12px #cccccc,
+    -6px -6px 12px #ffffff;
 }
 .userCardImg {
   position: absolute;

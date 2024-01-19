@@ -2,11 +2,11 @@
   <a-layout class="layout h-screen w-screen">
     <a-layout-header>
       <adminer-header></adminer-header>
-    </a-layout-header >
+    </a-layout-header>
     <a-layout>
-      <a-layout-sider 
-        collapsible 
-        breakpoint="xl" 
+      <a-layout-sider
+        collapsible
+        breakpoint="xl"
         :collapsed="collapsed"
         @collapse="onCollapse"
         theme="dark"
@@ -19,7 +19,11 @@
         >
           <a-menu-item v-for="item in menuInfo" :key="item[0]">
             <template #icon>
-              <icon-online :code="item[2]" :size="14" :mode="itemMode"></icon-online>
+              <icon-online
+                :code="item[2]"
+                :size="14"
+                :mode="itemMode"
+              ></icon-online>
             </template>
             {{ item[1] }}
           </a-menu-item>
@@ -32,7 +36,14 @@
       </a-layout-sider>
       <a-layout>
         <a-layout-content>
-          <div style="height: calc(100vh - 56px); display: flex; flex-direction: column; overflow: auto;">
+          <div
+            style="
+              height: calc(100vh - 56px);
+              display: flex;
+              flex-direction: column;
+              overflow: auto;
+            "
+          >
             <slot />
           </div>
         </a-layout-content>
@@ -42,48 +53,48 @@
 </template>
 
 <script lang="ts" setup>
-import type { iconMode } from '~/composables/composable'
+import type { iconMode } from "~/composables/composable";
 
-const collapsed = ref(false)
-const route = useRoute()
-const defalutSelected = ref(['/'])
-const menuInfo = ref([])
-const itemMode = ref<iconMode>('local')
+const collapsed = ref(false);
+const route = useRoute();
+const defalutSelected = ref(["/"]);
+const menuInfo = ref([]);
+const itemMode = ref<iconMode>("local");
 
 const onCollapse = (val, type) => {
   collapsed.value = val;
-}
+};
 const onClickMenuItem = (key) => {
-  navigateTo(`/adminer${key}`)
-}
+  navigateTo(`/adminer${key}`);
+};
 const isUrlAlive = async () => {
-  const res = await urlAlive(iconProjectUrl)
-  if(res) itemMode.value = 'online'
-}
+  const res = await urlAlive(iconProjectUrl);
+  if (res) itemMode.value = "online";
+};
 onMounted(() => {
-  selected()
-  getMenu()
-  isUrlAlive()
-})
+  selected();
+  getMenu();
+  isUrlAlive();
+});
 const selected = () => {
-  const pathArr = route.path.split('/');
-  if(pathArr.length > 2) {
-    defalutSelected.value[0] = `/${pathArr[2]}`
+  const pathArr = route.path.split("/");
+  if (pathArr.length > 2) {
+    defalutSelected.value[0] = `/${pathArr[2]}`;
   }
-}
+};
 const getMenu = async () => {
-  const {ok, data} = await httpGet('/api/adminer/menuList')
-  if(ok) {
-    menuInfo.value = data
+  const { ok, data } = await httpGet("/api/adminer/menuList");
+  if (ok) {
+    menuInfo.value = data;
   }
-}
+};
 </script>
 
 <style scoped>
 .layout {
   background: var(--color-fill-2);
 }
-.layout :deep(.arco-layout-header)  {
+.layout :deep(.arco-layout-header) {
   height: 48px;
   line-height: 48px;
   background: rgba(48, 48, 48, 1);
@@ -95,7 +106,7 @@ const getMenu = async () => {
   background: rgba(128, 128, 128, 0.1);
 }
 .layout :deep(.arco-layout-footer),
-.layout :deep(.arco-layout-content)  {
+.layout :deep(.arco-layout-content) {
   /* display: flex; */
   flex-direction: column;
   /* justify-content: center; */

@@ -1,30 +1,30 @@
 <template>
-  <div id="editor" ref="editorRef" style="height: 100%;overflow: auto;"></div>
+  <div id="editor" ref="editorRef" style="height: 100%; overflow: auto"></div>
 </template>
 
 <script lang="ts" setup>
-import * as monaco from 'monaco-editor'
+import * as monaco from "monaco-editor";
 
 const props = defineProps({
   lang: {
     type: String,
-    required: true
+    required: true,
   },
   code: {
     type: String,
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
-const editorRef = ref()
-const codeEditor = ref()
-const codeValue = ref('')
-const language = ref('javascript')
+const editorRef = ref();
+const codeEditor = ref();
+const codeValue = ref("");
+const language = ref("javascript");
 
 onMounted(() => {
-  codeValue.value = props.code
-  language.value = props.lang
-  if(!editorRef.value) {
+  codeValue.value = props.code;
+  language.value = props.lang;
+  if (!editorRef.value) {
     return;
   }
   // 编辑器设置
@@ -34,10 +34,10 @@ onMounted(() => {
     automaticLayout: true,
     colorDecorators: true,
     minimap: {
-      enabled: true
+      enabled: true,
     },
     readOnly: false,
-    theme: 'vs-dark',
+    theme: "vs-dark",
     codeLens: true,
     folding: true, // 是否折叠
     roundedSelection: false,
@@ -49,13 +49,13 @@ onMounted(() => {
     selectionClipboard: false, // 选择剪切板
     lineNumbers: "on", // 行号 取值： "on" | "off" | "relative" | "interval" | function
     lineNumbersMinChars: 5, // 行号最小字符   number
-    accessibilitySupport: "auto"
-  })
+    accessibilitySupport: "auto",
+  });
   // 监听编辑变化
   codeEditor.value.onDidChangeModelContent(() => {
-    console.log('目前内容为：' + toRaw(codeEditor.value).getValue())
-    console.log(codeValue.value)
-    console.log(props.lang)
-  })
-})
+    console.log("目前内容为：" + toRaw(codeEditor.value).getValue());
+    console.log(codeValue.value);
+    console.log(props.lang);
+  });
+});
 </script>

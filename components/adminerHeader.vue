@@ -1,16 +1,24 @@
 <template>
   <div class="header">
-    <img src="/logo.png" class="logo mb"/>
+    <img src="/logo.png" class="logo mb" />
     <div class="btn-group">
-      <a-button shape="circle" style="margin-right: 0.75rem;" @click="navigateTo('/')">
+      <a-button
+        shape="circle"
+        style="margin-right: 0.75rem"
+        @click="navigateTo('/')"
+      >
         <template #icon>
           <icon-home />
         </template>
       </a-button>
-      <a-button shape="circle" style="margin-right: 0.75rem;" @click="handleFullScreen">
+      <a-button
+        shape="circle"
+        style="margin-right: 0.75rem"
+        @click="handleFullScreen"
+      >
         <template #icon>
-          <icon-fullscreen v-if="!fullscreen"/>
-          <icon-fullscreen-exit v-else/>
+          <icon-fullscreen v-if="!fullscreen" />
+          <icon-fullscreen-exit v-else />
         </template>
       </a-button>
       <a-dropdown position="bottom" trigger="hover">
@@ -27,18 +35,18 @@
 </template>
 
 <script lang="ts" setup>
-const fullscreen = ref(false)
+const fullscreen = ref(false);
 const handleFullScreen = () => {
-  if(fullscreen.value) {
+  if (fullscreen.value) {
     // 退出全屏
-    document.exitFullscreen()
-    fullscreen.value = false
+    document.exitFullscreen();
+    fullscreen.value = false;
   } else {
     // 进入全屏模式
     document.documentElement.requestFullscreen();
-    fullscreen.value = true
+    fullscreen.value = true;
   }
-}
+};
 </script>
 
 <style scoped>
